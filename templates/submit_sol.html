@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Submit Solution</title>
+</head>
+<body>
+
+<h1>Submit Your solution here.</h1>
+<p>Copy link of Github repository where is your solution located in the field below: </p>
+{% if error %}
+<p style="color: red;">Please submit a search term.</p>
+{% endif %}
+<form action="" method="get">
+  <input type="text" name="repo_link">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
