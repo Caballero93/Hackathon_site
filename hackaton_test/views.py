@@ -53,4 +53,9 @@ def submit_sol(request):
 def visualize(request):
     return render(request, "viz.html")
 
+def results(request):
+    if request.is_ajax:
+        return HttpResponse("YES!")
+    else:
+        return HttpResponse("NO!")
 

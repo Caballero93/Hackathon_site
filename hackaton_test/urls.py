@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.my_homepage_view),
     url(r'^submit', views.submit_sol),
-    url(r'^viz/$', views.visualize)
+    url(r'^viz/$', views.visualize),
+    url(r'^results/$', views.results)
     # url(r'^submit_sol/thanks/$', views.thanks)
 ]
