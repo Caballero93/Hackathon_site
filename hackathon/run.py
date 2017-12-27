@@ -20,5 +20,5 @@ if __name__ == '__main__':
     framework = Process(target=framework.run, args=('log', ))
     framework.start()
 
-    webbrowser.open('http://localhost:{}/viz.html'
-                    .format(CFG.results_http_server_port))
+    # webbrowser.open('http://localhost:{}/viz.html'
+    #                 .format(CFG.results_http_server_port))
