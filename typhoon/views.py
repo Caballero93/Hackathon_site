@@ -5,6 +5,7 @@ import os
 import subprocess
 import shutil
 import importlib.util
+from . models import HallOfFame
 
 
 def my_homepage_view(request):
@@ -58,3 +59,8 @@ def results(request):
         return HttpResponse("YES!")
     else:
         return HttpResponse("NO!")
+
+def hallOfFame(request):
+    entries = HallOfFame.objects.all()
+    context = {"entries":entries}
+    return render(request, "halloffame.html", context)
