@@ -21,7 +21,7 @@ def worker(msg: DataMessage) -> ResultsMessage:
 
 def run(args) -> None:
     prepare_dot_dir()
-    config_outs(args, 'solution')
+    #config_outs(args, 'solution')
 
     cntrl = Control()
 
