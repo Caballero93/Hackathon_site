@@ -16,7 +16,8 @@ __author__ = "Novak Boskov"
 __copyright__ = "Typhoon HIL Inc."
 __license__ = "MIT"
 
-
+global Overall
+Overall = 0
 def rater(socket: zmq.Socket, poller: zmq.Poller, data_msg: DataMessage) \
     -> None:
     """Calculate time spent by the solution in current cycle and physics
@@ -44,9 +45,12 @@ def rater(socket: zmq.Socket, poller: zmq.Poller, data_msg: DataMessage) \
                   .format('ADEQUATE' if match else 'INADEQUATE',
                           solution_response, spent))
 
-        write_a_result(
+        res = write_a_result(
             *get_physics_metrics(data_msg, solution_response, spent, match),
             data_msg)
+        global Overall
+        Overall = res['overall']
+        print(Overall)
     elif CFG.DBG:
         print('DBG: results are not sent in predefined interval of {}s.'
               .format(CFG.max_results_wait))
