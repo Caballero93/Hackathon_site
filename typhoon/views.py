@@ -19,6 +19,7 @@ def submit_sol(request):
         if not r:
             error = True
         else:
+            root_dir = os.getcwd()
             os.chdir("./hackathon")
             cwd = str(os.getcwd())
             # return HttpResponse(cwd)
@@ -50,6 +51,7 @@ def submit_sol(request):
 
             subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
             subprocess.run(['python', 'run.py'])
+            os.chdir(root_dir)
             return HttpResponse(cwd)
         # return HttpResponseRedirect('/viz.html')
 
