@@ -27,6 +27,7 @@ def submit_sol(request):
             # os.mkdir(theirs)
             # return HttpResponse(cwd)
             os.system('git reset --hard')
+            os.system('git clean -f')
             subprocess.run(['git', 'clone', r, theirs])
 
             # #Remove ours requirements file
