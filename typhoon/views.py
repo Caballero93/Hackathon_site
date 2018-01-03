@@ -27,8 +27,6 @@ def submit_sol(request):
             theirs = 'hackathon2017.their'
             # os.mkdir(theirs)
             # return HttpResponse(cwd)
-            os.system('git reset --hard')
-            os.system('git clean -f')
             subprocess.run(['git', 'clone', r, theirs])
 
             # #Remove ours requirements file
@@ -51,6 +49,8 @@ def submit_sol(request):
 
             subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
             subprocess.run(['python', 'run.py'])
+            os.system('git reset --hard')
+            os.system('git clean -f')
             os.chdir(root_dir)
             return HttpResponse(cwd)
         # return HttpResponseRedirect('/viz.html')
