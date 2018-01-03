@@ -4,6 +4,7 @@ import sys
 import os
 import subprocess
 import shutil
+import json
 import importlib.util
 from .models import HallOfFame
 
@@ -49,10 +50,13 @@ def submit_sol(request):
 
             subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
             subprocess.run(['python', 'run.py'])
+            with open('./data/results.json', 'r') as f:
+                res = json.load(f)
+            Overall = res[7199]['overall']
             os.system('git reset --hard')
             os.system('git clean -f')
             os.chdir(root_dir)
-            return HttpResponse(cwd)
+            return HttpResponse(Overall)
         # return HttpResponseRedirect('/viz.html')
 
 
