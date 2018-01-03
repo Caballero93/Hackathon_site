@@ -57,7 +57,7 @@ def submit_sol(request):
             os.system('git reset --hard')
             os.system('git clean -f')
             os.chdir(root_dir)
-            return HttpResponseRedirect(reverse('typhoon:result'), args=(Overall,))
+            return HttpResponseRedirect(reverse('typhoon:result', args=(Overall,)))
     return render(request, 'submit_sol.html', {"error": error})
 
 
