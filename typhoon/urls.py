@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from . import views
 
+app_name = 'typhoon'
 urlpatterns = [
     url(r'^$', views.my_homepage_view, name='my_homepage_view'),
     url(r'^submit', views.submit_sol, name='submit'),
