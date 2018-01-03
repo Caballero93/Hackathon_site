@@ -1,5 +1,6 @@
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 import sys
 import os
 import subprocess
@@ -56,10 +57,7 @@ def submit_sol(request):
             os.system('git reset --hard')
             os.system('git clean -f')
             os.chdir(root_dir)
-            return HttpResponse(Overall)
-        # return HttpResponseRedirect('/viz.html')
-
-
+            return HttpResponseRedirect(reverse('typhoon:result'), args=(Overall,))
     return render(request, 'submit_sol.html', {"error": error})
 
 
@@ -78,3 +76,15 @@ def hallOfFame(request):
     entries = HallOfFame.objects.all()
     context = {"entries": entries}
     return render(request, "halloffame.html", context)
+
+def result(request, Overall):
+    error = False
+    if 'name' in request.POST:
+        name = request.POST['name']
+        if not name:
+            error = True
+        else:
+            entry = HallOfFame(name=name, score=Overall)
+            entry.save()
+            return HttpResponseRedirect(reverse('typhoon:halloffame'))
+    return render(request, 'result.html', {"overall":Overall,"error":error})

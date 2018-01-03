@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Final result</title>
+</head>
+<body>
+
+<h1>Congratulations! Your final result is: {{overall}}</h1>
+<p>If you want to place your result in our Hall of fame, please enter your name: </p>
+{% if error %}
+<p style="color: red;">You didn't enter your name.</p>
+{% endif %}
+<form action="" method="post">
+  <input type="text" name="name">
+  <br><br>
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
