@@ -94,12 +94,18 @@ def hallOfFame(request):
 
 def result(request, Overall):
     error = False
+    error2 = False
     if 'name' in request.POST:
         name = request.POST['name']
         if not name:
             error = True
         else:
-            entry = HallOfFame(name=name, score=Overall)
-            entry.save()
-            return HttpResponseRedirect(reverse('typhoon:halloffame'))
-    return render(request, 'result.html', {"overall":Overall,"error":error})
+            try:
+                entry = HallOfFame.objects.get(name=name)
+                error2 = True
+                return render(request, 'result.html', {"overall": Overall, "error": error, "error2": error2})
+            except:
+                entry = HallOfFame(name=name, score=Overall)
+                entry.save()
+                return HttpResponseRedirect(reverse('typhoon:halloffame'))
+    return render(request, 'result.html', {"overall":Overall,"error":error, "error2":error2})
