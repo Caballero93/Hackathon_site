@@ -52,7 +52,15 @@ def submit_sol(request):
                     shutil.rmtree(theirs)
 
                 subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
-                subprocess.run(['python', 'run.py'])
+                try:
+                    subprocess.check_output(['python', 'run.py'])
+                except subprocess.CalledProcessError as e:
+                    os.system('git reset --hard')
+                    os.system('git clean -f')
+                    os.chdir(root_dir)
+                    message = e.output
+                    error2 = True
+                    return render(request, 'submit_sol.html', {"error": error, "error2": error2, "message":message})
                 with open('./data/results.json', 'r') as f:
                     res = json.load(f)
                 Overall = res[7199]['overall']
