@@ -16,49 +16,56 @@ def my_homepage_view(request):
 
 def submit_sol(request):
     error = False
+    error2 = False
     if 'repo_link' in request.GET:
         r = request.GET['repo_link']
         if not r:
             error = True
         else:
             root_dir = os.getcwd()
-            os.chdir("./hackathon")
-            cwd = str(os.getcwd())
-            # return HttpResponse(cwd)
-            # if __name__ == '__main__':
-            theirs = 'hackathon2017.their'
-            # os.mkdir(theirs)
-            # return HttpResponse(cwd)
-            subprocess.run(['git', 'clone', r, theirs])
+            try:
+                os.chdir("./hackathon")
+                cwd = str(os.getcwd())
+                # return HttpResponse(cwd)
+                # if __name__ == '__main__':
+                theirs = 'hackathon2017.their'
+                # os.mkdir(theirs)
+                # return HttpResponse(cwd)
+                subprocess.run(['git', 'clone', r, theirs])
 
-            # #Remove ours requirements file
-            # os.remove('requirements.txt')
-            # Get theirs
-            shutil.copyfile(os.path.join(theirs, 'requirements.txt'),
-                            'requirements.txt')
+                # #Remove ours requirements file
+                # os.remove('requirements.txt')
+                # Get theirs
+                shutil.copyfile(os.path.join(theirs, 'requirements.txt'),
+                                'requirements.txt')
 
-            # Remove our hackathon/solution
-            shutil.rmtree(os.path.join('hackathon', 'solution'))
-            # Get their hackathon/solution
-            shutil.copytree(os.path.join(theirs, 'hackathon', 'solution'),
-                            os.path.join('hackathon', 'solution'))
+                # Remove our hackathon/solution
+                shutil.rmtree(os.path.join('hackathon', 'solution'))
+                # Get their hackathon/solution
+                shutil.copytree(os.path.join(theirs, 'hackathon', 'solution'),
+                                os.path.join('hackathon', 'solution'))
 
-            # Remove their repository completely
-            if sys.platform.startswith('win'):
-                os.system('rmdir /S /Q "{}"'.format(theirs))
-            else:
-                shutil.rmtree(theirs)
+                # Remove their repository completely
+                if sys.platform.startswith('win'):
+                    os.system('rmdir /S /Q "{}"'.format(theirs))
+                else:
+                    shutil.rmtree(theirs)
 
-            subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
-            subprocess.run(['python', 'run.py'])
-            with open('./data/results.json', 'r') as f:
-                res = json.load(f)
-            Overall = res[7199]['overall']
-            os.system('git reset --hard')
-            os.system('git clean -f')
-            os.chdir(root_dir)
-            return HttpResponseRedirect(reverse('typhoon:result', args=(Overall,)))
-    return render(request, 'submit_sol.html', {"error": error})
+                subprocess.run(['pip', 'install', '-r', 'requirements.txt'])
+                subprocess.run(['python', 'run.py'])
+                with open('./data/results.json', 'r') as f:
+                    res = json.load(f)
+                Overall = res[7199]['overall']
+                os.system('git reset --hard')
+                os.system('git clean -f')
+                os.chdir(root_dir)
+                return HttpResponseRedirect(reverse('typhoon:result', args=(Overall,)))
+            except:
+                os.system('git reset --hard')
+                os.system('git clean -f')
+                os.chdir(root_dir)
+                error2 = True
+    return render(request, 'submit_sol.html', {"error":error, "error2":error2})
 
 
 def visualize(request):
